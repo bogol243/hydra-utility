@@ -16,7 +16,9 @@ function drawPolygon(points,fillStyle)
   return {src:canvas};
 }
 
-function drawMountain(){
+// point -- array of 2 numbers
+// point_modulator -- function point -> point  
+function drawMountain(point_modulator=null){
     points = [
       [0, 400], //left
       [50, 310],
@@ -28,8 +30,14 @@ function drawMountain(){
       [550, 30], [600, 100], [720, 200],
       [800, 400]]; //right
   	
-  	// decrease height by 2
-  	pts = points.map((p)=>{return [p[0],p[1]==0?0:p[1]/1.5]});
+  	// modulate
+    if(point_modulator!=null)
+  		points = points.map(point_modulator);
   
-	return drawPolygon(pts,"white");
+	return drawPolygon(points,"white");
+}
+
+function scale_modulator(x_scale,y_scale)
+{
+  return (p)=> {return [p[0]*x_scale,p[1]*y_scale]};
 }
