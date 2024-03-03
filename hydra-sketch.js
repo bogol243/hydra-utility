@@ -1,5 +1,6 @@
 await loadScript("https://cdn.statically.io/gl/metagrowing/extra-shaders-for-hydra/main/lib/lib-screen.js")
 await loadScript("https://cdn.statically.io/gh/bogol243/hydra-utility/main/sobel.js");
+await loadScript("//cdnjs.cloudflare.com/ajax/libs/ramda/0.29.1/ramda.min.js");
 //await loadScript("https://cdn.statically.io/gh/bogol243/hydra-utility/main/drawing.js");
 
 function drawPolygon(points,fillStyle)
@@ -57,15 +58,23 @@ function rythm_modulator()
 
 f1 = scale_modulator(0.8,0.5,0.10,0.1);
 f2 = rythm_modulator();
-f2(f1(p))
+modulator = R.compose(f1,f2);
 
+ararat_canvas = {}
+
+update = ()=>{
+	mod_val = Math.sin(time)*100;
+  	adrawMountain(modulator)); // init source with canvas
+	
+};
+
+ararat_mask = src(s0); // white static mask shape
 
 
 upper_part=shape(4,1).scale(1,1,0.5,0.5,0);
 lower_mask=shape(4,1).scale(1,1,0.73,0.5,1.02);
 
-s0.init(drawMountain(scale_modulator(0.8,0.5,0.10,0.1))); // init source with canvas
-ararat_mask = src(s0); // white static mask shape
+
 
 
 
