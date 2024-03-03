@@ -41,16 +41,22 @@ function drawMountain(point_modulator=null){
 	return drawPolygon(points,"white");
 }
 
-function scale_modulator(x_scale,y_scale)
+function scale_modulator(x_scale,y_scale,x_offset=0,y_offset=0)
 {
-  return (p)=> {return [p[0]*x_scale,p[1]*y_scale]};
+  if(x_offset!=0)
+  	x_offset = x_offset*800;
+  if(y_offset!=0)
+  	y_offset = y_offset*800;
+  return (p)=> {return [(p[0]*x_scale)+x_offset,(p[1]*y_scale)+y_offset]};
 }
 
-s0.init(drawMountain(scale_modulator(0.7,0.5))); // init source with canvas
-ararat_mask = src(s0).scale(0.9,1,1,1.5,0.5); // white static mask shape
 
 upper_part=shape(4,1).scale(1,1,0.5,0.5,0);
-lower_part=shape(4,1).scale(1,1,0.65,0.5,1.01);
+lower_mask=shape(4,1).scale(1,1,0.73,0.5,1.02);
+
+s0.init(drawMountain(scale_modulator(0.8,0.5,0.10,0.1))); // init source with canvas
+ararat_mask = src(s0); // white static mask shape
+
 
 
 // white mountain with moving polygons
@@ -66,9 +72,11 @@ src(o0).sobel().out(o1);
 src(o0).add(src(o1)).out(o2);
 upper = src(o2);
 
+masking_gradient = gradient(0).g().scale(0.7,1,0.4).scrollY(0.02).scale(1.5);
 moving_grid = shape(4,0.9).repeat(12,12).scale(1,1,0.7).invert().color(1,0,1).scrollY(1,-0.3)
-  .modulateScale(gradient().g()).scale(0.3).mask(gradient());
+  .modulateScale(gradient().g()).scale(0.3);
 
-moving_grid.mask(lower_part).add(upper).out(o3)
+moving_grid.mask(masking_gradient).mask(lower_mask).add(upper).out(o3)
 
+//masking_gradient.add(upper).out(o3);
 render(o3);
