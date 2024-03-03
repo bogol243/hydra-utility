@@ -62,8 +62,13 @@ modulator = R.compose(f1,f2);
 
 bpm = 120
 s0.init(drawMountain(scale_modulator(0.8,0.5,0.10,0.1))); // init source with canvas
-ararat_mask = src(s0).modulateScrollY(osc(()=>).scale(0.1).repeat(4),0.01);//.modulateScale(,1); // white static mask shape
 
+mr = () => {return Math.random()/10};
+
+//ararat_mask = src(s0).modulateScrollY(osc([mr(),mr(),mr()]).scale(0.4).repeat(25),0.05);
+ararat_mask = src(s0)
+  .modulateScrollX(osc(()=>Math.random()),0.005)
+  .modulateScrollY(noise([4,3].smooth(),0.5).thresh(0.2,0.1).pixelate(8,1).repeat(4),0.01);
 
 upper_part=shape(4,1).scale(1,1,0.5,0.5,0);
 lower_mask=shape(4,1).scale(1,1,0.73,0.5,1.02);
