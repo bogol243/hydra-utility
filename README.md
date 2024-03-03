@@ -9,3 +9,5 @@ Sources repo: https://github.com/hydra-synth
 Extra hydra shaders: https://gitlab.com/metagrowing/extra-shaders-for-hydra
 
 https://github.com/geikha/hyper-hydra
+
+https://github.com/arnoson/hydra-midi
