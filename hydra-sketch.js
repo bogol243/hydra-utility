@@ -50,6 +50,16 @@ function scale_modulator(x_scale,y_scale,x_offset=0,y_offset=0)
   return (p)=> {return [(p[0]*x_scale)+x_offset,(p[1]*y_scale)+y_offset]};
 }
 
+function rythm_modulator()
+{
+  return (p)=>{return [p[0],p[1]<400? p[1]+mod_val:p[1]]}
+}
+
+f1 = scale_modulator(0.8,0.5,0.10,0.1);
+f2 = rythm_modulator();
+f2(f1(p))
+
+
 
 upper_part=shape(4,1).scale(1,1,0.5,0.5,0);
 lower_mask=shape(4,1).scale(1,1,0.73,0.5,1.02);
