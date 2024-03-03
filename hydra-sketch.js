@@ -60,22 +60,13 @@ f1 = scale_modulator(0.8,0.5,0.10,0.1);
 f2 = rythm_modulator();
 modulator = R.compose(f1,f2);
 
-ararat_canvas = {}
-
-update = ()=>{
-	mod_val = Math.sin(time)*100;
-  	adrawMountain(modulator)); // init source with canvas
-	
-};
-
-ararat_mask = src(s0); // white static mask shape
+bpm = 120
+s0.init(drawMountain(scale_modulator(0.8,0.5,0.10,0.1))); // init source with canvas
+ararat_mask = src(s0).modulateScrollY(osc(()=>).scale(0.1).repeat(4),0.01);//.modulateScale(,1); // white static mask shape
 
 
 upper_part=shape(4,1).scale(1,1,0.5,0.5,0);
 lower_mask=shape(4,1).scale(1,1,0.73,0.5,1.02);
-
-
-
 
 
 // white mountain with moving polygons
