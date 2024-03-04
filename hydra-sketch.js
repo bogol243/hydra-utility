@@ -3,6 +3,13 @@ await loadScript("https://cdn.statically.io/gh/bogol243/hydra-utility/main/sobel
 await loadScript("//cdnjs.cloudflare.com/ajax/libs/ramda/0.29.1/ramda.min.js");
 //await loadScript("https://cdn.statically.io/gh/bogol243/hydra-utility/main/drawing.js");
 
+a.setBins(8);
+a.setSmooth(0.5);
+a.setScale(10);
+a.setCutoff(2);
+
+a.show();
+
 function drawPolygon(points,fillStyle)
 {
   canvas = document.createElement("canvas");
@@ -65,14 +72,14 @@ s0.init(drawMountain(scale_modulator(0.8,0.5,0.10,0.1))); // init source with ca
 
 mr = () => {return Math.random()/10};
 
-//ararat_mask = src(s0).modulateScrollY(osc([mr(),mr(),mr()]).scale(0.4).repeat(25),0.05);
 ararat_mask = src(s0)
-  .modulateScrollX(osc(()=>Math.random()),0.005)
-  .modulateScrollY(noise([4,3].smooth(),0.5).thresh(0.2,0.1).pixelate(8,1).repeat(4),0.01);
+  .modulateScrollX(osc(()=>Math.random()),0.01)
+  .modulateScrollY(noise(()=>a.fft[7]+0.3).pixelate(),0.1);
+  //.modulateScrollY(noise([4,2].smooth(),[0.5,0.7]).thresh(0.2,0.1).pixelate(8,1).repeat(4),0.01);
 
 upper_part=shape(4,1).scale(1,1,0.5,0.5,0);
 lower_mask=shape(4,1).scale(1,1,0.73,0.5,1.02);
-
+  
 
 // white mountain with moving polygons
 ararat = voronoi(12,0.9,0.4) // moving polygons
